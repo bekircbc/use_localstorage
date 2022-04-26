@@ -1,6 +1,12 @@
+import { useState, useEffect } from "react";
 import "./App.scss";
 import _jobs from "./data/jobs.json";
-import { useState, useEffect } from "react";
+
+_jobs.forEach((job) => {
+  job.status = "send";
+});
+
+const statuses = ["send", "wait", "interview", "declined", "accepted"];
 
 function App() {
   const [displayKind, setDisplayKind] = useState("");
@@ -17,25 +23,24 @@ function App() {
   const loadFromLocalStorage = () => {
     const jobAppState = JSON.parse(localStorage.getItem("jobAppState"));
     // updateWithJsonFile(_jobs, jobAppState);
-    if (jobAppState === null) {
-      setDisplayKind("full");
-      setJobs(_jobs);
-    } else {
-      setDisplayKind(jobAppState.displayKind);
-      setJobs(jobAppState.jobs);
-    }
+    // if (jobAppState === null) {
+    //   setDisplayKind("full");
+    //   setJobs(_jobs);
+    // } else {
+    //   setDisplayKind(jobAppState.displayKind);
+    //   setJobs(jobAppState.jobs);
+    // }
   };
 
-  const loadTechItems = () => {
-    (async () => {
-      const response = await fetch(techItemsUrl);
-      let _techItems = await response.json();
-      setTechItems(_techItems);
-    })();
-  };
+  // const loadTechItems = () => {
+  //   (async () => {
+  //     const response = await fetch(techItemsUrl);
+  //     let _techItems = await response.json();
+  //     setTechItems(_techItems);
+  //   })();
+  // };
 
   useEffect(() => {
-    loadTechItems();
     loadFromLocalStorage();
   }, []);
 
